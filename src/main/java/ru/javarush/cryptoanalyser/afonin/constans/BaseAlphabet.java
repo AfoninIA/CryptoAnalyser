@@ -1,7 +1,7 @@
 package ru.javarush.cryptoanalyser.afonin.constans;
 
-public class CryptoAlphabet {
-    private static final String RUS = "абвгдежзиклмнопрстуфхцчшщъыьэя";
+public class BaseAlphabet {
+    private static final String RUS = "абвгдежзийклмнопрстуфхцчшщъыьэюя";
 
     private static final String CYPHERS = "1234567890";
 

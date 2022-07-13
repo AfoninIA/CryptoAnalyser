@@ -1,18 +1,19 @@
 package ru.javarush.cryptoanalyser.afonin.commands;
 
+import ru.javarush.cryptoanalyser.afonin.constans.BaseAlphabet;
 import ru.javarush.cryptoanalyser.afonin.entity.Result;
-import ru.javarush.cryptoanalyser.afonin.exeption.ApplicationExeption;
-import ru.javarush.cryptoanalyser.afonin.util.PathFinder;
+import ru.javarush.cryptoanalyser.afonin.entity.ResultCode;
+import ru.javarush.cryptoanalyser.afonin.util.Cipher;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.List;
 
 public class Decoder implements Action{
     @Override
     public Result execute(String[] parameters) {
-        //TODO need dev logic decrypt
-        throw new UnsupportedOperationException();
+        //decode encoded.txt decrypted.txt 9
+        String inputTxtFile = parameters[0];
+        String outputDecryptedTxtFile = parameters[1];
+        int keyShift = Integer.parseInt(parameters[2]);
+        Cipher.cesarCipher(inputTxtFile, outputDecryptedTxtFile, -keyShift);
+        return new Result(ResultCode.OK, "all text decoded");
     }
 }

@@ -13,8 +13,6 @@ public class Application {
     }
 
     public Result run(String[] args){
-        //ecncode text.txt encoded.txt 9
-
         String command = args[0]; //encode
         String[] parametrs = Arrays.copyOfRange(args, 1, args.length);
         return mainController.execute(command, parametrs);
