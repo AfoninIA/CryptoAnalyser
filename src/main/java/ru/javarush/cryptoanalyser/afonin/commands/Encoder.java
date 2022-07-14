@@ -1,6 +1,5 @@
 package ru.javarush.cryptoanalyser.afonin.commands;
 
-import ru.javarush.cryptoanalyser.afonin.constans.BaseAlphabet;
 import ru.javarush.cryptoanalyser.afonin.entity.Result;
 import ru.javarush.cryptoanalyser.afonin.entity.ResultCode;
 import ru.javarush.cryptoanalyser.afonin.util.Cipher;

@@ -16,7 +16,7 @@ import static java.util.stream.Collectors.joining;
 
 public class Cipher {
 
-    private static List<String> getText(Path path){
+    private static List<String> readText(Path path){
         try {
             return Files.readAllLines(path);
         } catch (IOException e) {
@@ -43,7 +43,7 @@ public class Cipher {
 
     public static void cesarCipher(String nameInputTxtFile, String nameOutputTxtFile, int keyShift){
 
-        List<String> inputText = getText(PathFinder.getPathFile(nameInputTxtFile));
+        List<String> inputText = readText(PathFinder.getPathFile(nameInputTxtFile));
         Map<Character, Character> cryptoAlphabet = getCryptoAlphabet(keyShift);
 
         List<String> shiftedText = inputText.stream()

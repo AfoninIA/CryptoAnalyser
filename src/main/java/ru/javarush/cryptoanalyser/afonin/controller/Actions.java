@@ -3,13 +3,13 @@ package ru.javarush.cryptoanalyser.afonin.controller;
 import ru.javarush.cryptoanalyser.afonin.commands.Action;
 import ru.javarush.cryptoanalyser.afonin.commands.Decoder;
 import ru.javarush.cryptoanalyser.afonin.commands.Encoder;
-
-import java.util.Locale;
+import ru.javarush.cryptoanalyser.afonin.commands.StatisticalDecrypt;
 
 public enum Actions {
 
     ENCODE(new Encoder()),
-    DECODE(new Decoder());
+    DECODE(new Decoder()),
+    STATISTICALDECRYPT(new StatisticalDecrypt());
 
     private final Action action;
 
