@@ -8,7 +8,7 @@ import ru.javarush.cryptoanalyser.afonin.util.Cipher;
 public class StatisticalDecrypt implements Action{
     @Override
     public Result execute(String[] parameters) {
-        //statisticaldecrypt idiot.txt decodedAnalyse.txt dictfull.txt
+        //statistical-decrypt encoded.txt decodedAnalyse.txt dict.txt
         //parameters = new String[]{"dictfull.txt", "idiot.txt", "decodedAnalyse.txt"};
         String encodedTxtFile = parameters[0];
         String outputDecodedTxtFile = parameters[1];

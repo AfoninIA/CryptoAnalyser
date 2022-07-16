@@ -34,6 +34,17 @@ public class Cipher {
         List<String> inputText = PathFinder.readText(nameInputTxtFile);
         List<String> dict = PathFinder.readText(dictionaryFileName);
         Map<Character, Character> decodeAlphabet = Analyser.getDecodeAlphabet(dict, inputText);
+        decodeAlphabet.entrySet().forEach(System.out::println);
+
+        int countTrue = 0, countAll = 0;
+        for (Map.Entry<Character, Character> entry : decodeAlphabet.entrySet()) {
+            if (entry.getKey().equals(entry.getValue())){
+                countTrue++;
+            }
+            countAll++;
+        }
+        System.out.println("Угадал: " + countTrue + " из " + countAll);
+
         List<String> decryptedText = Cipher.replaceSymbols(inputText, decodeAlphabet);
         PathFinder.saveToFile(nameOutputTxtFile, decryptedText);
     }
@@ -43,14 +54,12 @@ public class Cipher {
         List<String> decryptedText = new ArrayList<>();
         int keyShift = 0;
         for (; keyShift < BaseAlphabet.ALPHABET.length; keyShift++) {
-            System.out.println(keyShift);
             Map<Character, Character> cryptoAlphabet = getShiftCryptoAlphabet(keyShift);
             decryptedText = replaceSymbols(inputText, cryptoAlphabet);
             if (Analyser.isText(decryptedText)){
                 break;
             }
         }
-        //decryptedText.add("Find keyShift = " + keyShift);
         PathFinder.saveToFile(nameOutputTxtFile, decryptedText);
     }
 
