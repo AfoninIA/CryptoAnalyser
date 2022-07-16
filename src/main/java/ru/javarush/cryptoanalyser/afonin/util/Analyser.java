@@ -1,24 +1,73 @@
 package ru.javarush.cryptoanalyser.afonin.util;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.joining;
 
 
 public class Analyser {
-    private static final int SPACE_IN_1000_SYMBOLS = 174;
+    private static final double MIN_SPACE_IN_1000_SYMBOLS = 130 / 1000d;
 
     public static boolean isText(List<String> analysedText){
-        throw new UnsupportedOperationException();
+        return getFrequencySymbols(analysedText).getOrDefault(' ', 0d) > MIN_SPACE_IN_1000_SYMBOLS;
     }
 
-    public static Map<Character, Integer> getFrequencySymbols(List<String> text){
-        Map<Character, Integer> frequencySymbols = new HashMap<>();
+    public static Map<Character, Double> getFrequencySymbols(List<String> text){
+        Map<Character, Double> result = new HashMap<>();
         text.stream()
                 .map(String::toLowerCase)
                 .flatMapToInt(String::chars)
                 .mapToObj(i -> (char)i)
-                .forEach(key -> frequencySymbols.put(key, frequencySymbols.getOrDefault(key, 0) + 1));
-        return frequencySymbols;
+                .forEach(key -> result.put(key, result.getOrDefault(key, 0d) + 1));
+
+        double sumAllSymbols = result.values().stream().mapToDouble(i -> i).sum();
+        result.replaceAll((key, value) -> (value / sumAllSymbols));
+        return result;
+    }
+
+    public static Map<Character, Character> getDecodeAlphabet(List<String> dict, List<String> text){
+
+        Map<Character, Double> frequencySymbolsInText = Analyser.getFrequencySymbols(text);
+        dict = dict.stream()
+                .map(t ->  t
+                        .toLowerCase()
+                        .chars()
+                        .mapToObj(i -> (char) i)
+                        .filter(frequencySymbolsInText::containsKey)
+                        .map(Object::toString)
+                        .collect(joining()))
+                .toList();
+        Map<Character, Double> frequencySymbolsInDict = Analyser.getFrequencySymbols(dict);
+        return frequencySymbolsInText.entrySet().stream()
+                .collect(
+                        Collectors.toMap(
+                                Map.Entry::getKey,
+                                v -> getCharByFrequency(v.getValue(), frequencySymbolsInDict)));
+    }
+
+    private static Character getCharByFrequency(double frequency, Map<Character, Double> srcFrequencySymbols) {
+        Character symbol = srcFrequencySymbols.entrySet().stream()
+                .min(Comparator.comparingDouble(e -> Math.abs(e.getValue() - frequency)))
+                .map(Map.Entry::getKey)
+                .orElse('!');
+        srcFrequencySymbols.remove(symbol);
+        return symbol;
+    }
+
+    private static void correctAlphabet(Map<Character, Character> alphabet, char c1, char c2){
+        Character keySymbolFirst = getKeyByValue(alphabet, c1);
+        Character keySymbolSecond = getKeyByValue(alphabet, c2);
+        alphabet.replace(keySymbolFirst, c2);
+        alphabet.replace(keySymbolSecond, c1);
+    }
+
+    private static <T, E> T getKeyByValue(Map<T, E> map, E value) {
+        return map.entrySet()
+                .stream()
+                .filter(entry -> Objects.equals(entry.getValue(), value))
+                .map(Map.Entry::getKey)
+                .findAny()
+                .orElse(null);
     }
 }

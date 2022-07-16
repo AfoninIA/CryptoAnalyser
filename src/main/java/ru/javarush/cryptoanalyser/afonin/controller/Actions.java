@@ -1,15 +1,13 @@
 package ru.javarush.cryptoanalyser.afonin.controller;
 
-import ru.javarush.cryptoanalyser.afonin.commands.Action;
-import ru.javarush.cryptoanalyser.afonin.commands.Decoder;
-import ru.javarush.cryptoanalyser.afonin.commands.Encoder;
-import ru.javarush.cryptoanalyser.afonin.commands.StatisticalDecrypt;
+import ru.javarush.cryptoanalyser.afonin.commands.*;
 
 public enum Actions {
 
-    ENCODE(new Encoder()),
+    BRUTEFORCE_DECODE(new BruteForceDecoder()),
     DECODE(new Decoder()),
-    STATISTICALDECRYPT(new StatisticalDecrypt());
+    ENCODE(new Encoder()),
+    STATISTICAL_DECRYPT(new StatisticalDecrypt());
 
     private final Action action;
 
@@ -18,6 +16,6 @@ public enum Actions {
     }
 
     public static Action find(String command) {
-        return Actions.valueOf(command.toUpperCase()).action;
+        return Actions.valueOf(command.toUpperCase().replace('-', '_')).action;
     }
 }
