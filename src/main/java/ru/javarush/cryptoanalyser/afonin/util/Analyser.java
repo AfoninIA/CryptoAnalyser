@@ -7,11 +7,10 @@ import static java.util.stream.Collectors.joining;
 
 
 public class Analyser {
-    private static final int SPACE_IN_1000_SYMBOLS = 174;
-    private static Map<Character, Double> frequencySymbolsInDict;
+    private static final double MIN_SPACE_IN_1000_SYMBOLS = 130 / 1000d;
 
     public static boolean isText(List<String> analysedText){
-        throw new UnsupportedOperationException();
+        return getFrequencySymbols(analysedText).getOrDefault(' ', 0d) > MIN_SPACE_IN_1000_SYMBOLS;
     }
 
     public static Map<Character, Double> getFrequencySymbols(List<String> text){
@@ -30,7 +29,6 @@ public class Analyser {
     public static Map<Character, Character> getDecodeAlphabet(List<String> dict, List<String> text){
 
         Map<Character, Double> frequencySymbolsInText = Analyser.getFrequencySymbols(text);
-
         dict = dict.stream()
                 .map(t ->  t
                         .toLowerCase()
@@ -40,49 +38,20 @@ public class Analyser {
                         .map(Object::toString)
                         .collect(joining()))
                 .toList();
-
-        frequencySymbolsInDict = Analyser.getFrequencySymbols(dict);
-        Map<Character, Character> decodeAlphabet = frequencySymbolsInText.entrySet().stream()
-                //.sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+        Map<Character, Double> frequencySymbolsInDict = Analyser.getFrequencySymbols(dict);
+        return frequencySymbolsInText.entrySet().stream()
                 .collect(
                         Collectors.toMap(
                                 Map.Entry::getKey,
-                                v -> getCharByFrequency(v.getValue())));
-
-        correctAlphabet(decodeAlphabet, 'и','н');
-        correctAlphabet(decodeAlphabet, 'у','п');
-        correctAlphabet(decodeAlphabet, 'ы','ч');
-        correctAlphabet(decodeAlphabet, 'з','г');
-        correctAlphabet(decodeAlphabet, 'ё','ю');
-        correctAlphabet(decodeAlphabet, 'ы','г');
-        correctAlphabet(decodeAlphabet, 'ш','й');
-        correctAlphabet(decodeAlphabet, 'ш','ё');
-        correctAlphabet(decodeAlphabet, 'ж','ё');
-        correctAlphabet(decodeAlphabet, 'э','ц');
-
-        List<String> decryptedText = Cipher.replaceSymbols(text, decodeAlphabet);
-
-        decryptedText.forEach(System.out::println);
-
-        int countTrue = 0, countAll = 0;
-        for (Map.Entry<Character, Character> entry : decodeAlphabet.entrySet()) {
-            if (entry.getKey().equals(entry.getValue())){
-                countTrue++;
-            }
-            countAll++;
-        }
-        System.out.println("Угадал: " + countTrue + " из " + countAll);
-
-        throw new UnsupportedOperationException();
-        //return null;
+                                v -> getCharByFrequency(v.getValue(), frequencySymbolsInDict)));
     }
 
-    private static Character getCharByFrequency(double aFreq) {
-        Character symbol = frequencySymbolsInDict.entrySet().stream()
-                .min(Comparator.comparingDouble(e -> Math.abs(e.getValue() - aFreq)))
+    private static Character getCharByFrequency(double frequency, Map<Character, Double> srcFrequencySymbols) {
+        Character symbol = srcFrequencySymbols.entrySet().stream()
+                .min(Comparator.comparingDouble(e -> Math.abs(e.getValue() - frequency)))
                 .map(Map.Entry::getKey)
                 .orElse('!');
-        frequencySymbolsInDict.remove(symbol);
+        srcFrequencySymbols.remove(symbol);
         return symbol;
     }
 
@@ -93,7 +62,7 @@ public class Analyser {
         alphabet.replace(keySymbolSecond, c1);
     }
 
-    public static <T, E> T getKeyByValue(Map<T, E> map, E value) {
+    private static <T, E> T getKeyByValue(Map<T, E> map, E value) {
         return map.entrySet()
                 .stream()
                 .filter(entry -> Objects.equals(entry.getValue(), value))
