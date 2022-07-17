@@ -20,6 +20,7 @@ public class Cipher {
         for (int i = 0; i < alphabet.length; i++) {
             cryptoAlphabet.put(alphabet[i], alphabet[(i + keyShift) % alphabet.length]);
         }
+        //cryptoAlphabet.entrySet().forEach(System.out::println);
         return cryptoAlphabet;
     }
 
@@ -34,16 +35,16 @@ public class Cipher {
         List<String> inputText = PathFinder.readText(nameInputTxtFile);
         List<String> dict = PathFinder.readText(dictionaryFileName);
         Map<Character, Character> decodeAlphabet = Analyser.getDecodeAlphabet(dict, inputText);
-        decodeAlphabet.entrySet().forEach(System.out::println);
-
-        int countTrue = 0, countAll = 0;
-        for (Map.Entry<Character, Character> entry : decodeAlphabet.entrySet()) {
-            if (entry.getKey().equals(entry.getValue())){
-                countTrue++;
-            }
-            countAll++;
-        }
-        System.out.println("Угадал: " + countTrue + " из " + countAll);
+//        decodeAlphabet.entrySet().forEach(System.out::println);
+//
+//        int countTrue = 0, countAll = 0;
+//        for (Map.Entry<Character, Character> entry : decodeAlphabet.entrySet()) {
+//            if (entry.getKey().equals(entry.getValue())){
+//                countTrue++;
+//            }
+//            countAll++;
+//        }
+//        System.out.println("Угадал: " + countTrue + " из " + countAll);
 
         List<String> decryptedText = Cipher.replaceSymbols(inputText, decodeAlphabet);
         PathFinder.saveToFile(nameOutputTxtFile, decryptedText);

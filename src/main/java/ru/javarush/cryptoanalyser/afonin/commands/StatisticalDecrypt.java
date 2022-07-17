@@ -9,7 +9,6 @@ public class StatisticalDecrypt implements Action{
     @Override
     public Result execute(String[] parameters) {
         //statistical-decrypt encoded.txt decodedAnalyse.txt dict.txt
-        //parameters = new String[]{"dictfull.txt", "idiot.txt", "decodedAnalyse.txt"};
         String encodedTxtFile = parameters[0];
         String outputDecodedTxtFile = parameters[1];
         String dictTxtFile = parameters[2];

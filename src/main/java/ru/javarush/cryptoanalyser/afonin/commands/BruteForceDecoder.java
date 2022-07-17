@@ -1,12 +1,8 @@
 package ru.javarush.cryptoanalyser.afonin.commands;
 
-import ru.javarush.cryptoanalyser.afonin.entity.ActionParameters;
 import ru.javarush.cryptoanalyser.afonin.entity.Result;
 import ru.javarush.cryptoanalyser.afonin.entity.ResultCode;
 import ru.javarush.cryptoanalyser.afonin.util.Cipher;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class BruteForceDecoder implements Action{
 

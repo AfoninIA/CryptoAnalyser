@@ -7,6 +7,7 @@ public enum Actions {
     BRUTEFORCE_DECODE(new BruteForceDecoder()),
     DECODE(new Decoder()),
     ENCODE(new Encoder()),
+    EXIT(new Exit()),
     STATISTICAL_DECRYPT(new StatisticalDecrypt());
 
     private final Action action;

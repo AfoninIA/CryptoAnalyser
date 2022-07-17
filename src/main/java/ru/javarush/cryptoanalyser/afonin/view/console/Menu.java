@@ -1,4 +1,4 @@
-package ru.javarush.cryptoanalyser.afonin.view;
+package ru.javarush.cryptoanalyser.afonin.view.console;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,36 +11,33 @@ public class Menu {
 
     public Menu(Scanner input) {
         this.input = input;
-        addEntrys();
+        addEntries();
     }
 
     public String[] run(){
-
         while (true){
             printMenu();
             String line = input.nextLine();
             int choice = Integer.parseInt(line);
-            if (choice == 0) break;
-            if (choice > entries.size()+1) continue;
+            if (choice > entries.size() + 1) {
+                continue;
+            }
 
             MenuEntry entry = entries.get(choice - 1);
             return entry.run(input);
         }
-        return new String[0];
     }
 
-    private void addEntrys(){
-        for (String[][] comand : Messages.QESTIONS) {
-            entries.add(new MenuEntry(comand[0][0], Arrays.copyOfRange(comand, 1, comand.length)));
+    private void addEntries(){
+        for (String[][] command : Messages.QESTIONS) {
+            entries.add(new MenuEntry(command[0][0], Arrays.copyOfRange(command, 1, command.length)));
         }
-
     }
 
     private void printMenu() {
-        System.out.println("Что нужно сделать?");
+        System.out.println(Messages.MENU_TITLE);
         for (int i = 0; i < entries.size(); i++) {
-            System.out.println((i+1) + " : " + entries.get(i).toString());
+            System.out.println((i + 1) + ". " + entries.get(i).getTitle());
         }
-        System.out.println("0 : Выйти");
     }
 }

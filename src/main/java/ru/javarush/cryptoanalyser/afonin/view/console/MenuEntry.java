@@ -1,12 +1,16 @@
-package ru.javarush.cryptoanalyser.afonin.view;
+package ru.javarush.cryptoanalyser.afonin.view.console;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class MenuEntry {
+    public String getTitle() {
+        return title;
+    }
+
     private final String title;
-    private final String[][] questions; //message, defaultValue, validationPattern
+    private final String[][] questions;
 
     public MenuEntry(String title, String[][] questions) {
         this.title = title;

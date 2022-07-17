@@ -3,8 +3,6 @@ package ru.javarush.cryptoanalyser.afonin.util;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.joining;
-
 
 public class Analyser {
     private static final double MIN_SPACE_IN_1000_SYMBOLS = 130 / 1000d;
@@ -22,28 +20,25 @@ public class Analyser {
                 .forEach(key -> result.put(key, result.getOrDefault(key, 0d) + 1));
 
         double sumAllSymbols = result.values().stream().mapToDouble(i -> i).sum();
-        result.replaceAll((key, value) -> (value / sumAllSymbols));
+        result.replaceAll((key, value) -> (value * 1000 / sumAllSymbols));
+        System.out.println("Частотность: ");
+        result.entrySet().forEach(System.out::println);
         return result;
     }
 
     public static Map<Character, Character> getDecodeAlphabet(List<String> dict, List<String> text){
 
         Map<Character, Double> frequencySymbolsInText = Analyser.getFrequencySymbols(text);
-        dict = dict.stream()
-                .map(t ->  t
-                        .toLowerCase()
-                        .chars()
-                        .mapToObj(i -> (char) i)
-                        .filter(frequencySymbolsInText::containsKey)
-                        .map(Object::toString)
-                        .collect(joining()))
-                .toList();
         Map<Character, Double> frequencySymbolsInDict = Analyser.getFrequencySymbols(dict);
-        return frequencySymbolsInText.entrySet().stream()
+        Map<Character, Character> alphabet = frequencySymbolsInText.entrySet().stream()
                 .collect(
                         Collectors.toMap(
                                 Map.Entry::getKey,
                                 v -> getCharByFrequency(v.getValue(), frequencySymbolsInDict)));
+        System.out.println("Алфавит");
+        alphabet.entrySet().forEach(System.out::println);
+        return alphabet;
+
     }
 
     private static Character getCharByFrequency(double frequency, Map<Character, Double> srcFrequencySymbols) {

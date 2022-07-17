@@ -1,4 +1,4 @@
-package ru.javarush.cryptoanalyser.afonin.view;
+package ru.javarush.cryptoanalyser.afonin.view.console;
 
 import ru.javarush.cryptoanalyser.afonin.controller.MainController;
 import ru.javarush.cryptoanalyser.afonin.entity.Result;
@@ -21,7 +21,7 @@ public class ConsoleApp {
         String[] argsConsole = menu.run();
         String command = argsConsole[0]; //encode
         String[] parametrs = Arrays.copyOfRange(argsConsole, 1, argsConsole.length);
-        mainController.execute(command, parametrs);
-        //Result result;
+        Result result = mainController.execute(command, parametrs);
+        System.out.println(result);
     }
 }

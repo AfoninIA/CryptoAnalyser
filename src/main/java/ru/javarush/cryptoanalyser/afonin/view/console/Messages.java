@@ -1,12 +1,9 @@
-package ru.javarush.cryptoanalyser.afonin.view;
+package ru.javarush.cryptoanalyser.afonin.view.console;
 
 import ru.javarush.cryptoanalyser.afonin.controller.Actions;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 public interface Messages {
-    Map<String, String[][]> QUESTION = new LinkedHashMap<>();
+    String MENU_TITLE = "Что нужно сделать?";
 
     String[][][] QESTIONS = new String[][][]{
             {
@@ -35,6 +32,10 @@ public interface Messages {
                     {"Где взять файл (полный адрес ИЛИ только имя ИЛИ нажмите Enter чтобы использовать ", "encoded.txt", "шаблон"},
                     {"Куда положить (полный адрес ИЛИ только имя ИЛИ нажмите Enter чтобы использовать ", "analysed.txt", "шаблон"},
                     {"Где взять словарь (полный адрес ИЛИ только имя ИЛИ нажмите Enter чтобы использовать ", "dict.txt", "шаблон"}
+            },
+            {
+                    {"Выйти"},
+                    {Actions.EXIT.name()}
             }
     };
 

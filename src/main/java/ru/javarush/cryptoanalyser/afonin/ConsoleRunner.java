@@ -1,8 +1,8 @@
 package ru.javarush.cryptoanalyser.afonin;
 
 import ru.javarush.cryptoanalyser.afonin.controller.MainController;
-import ru.javarush.cryptoanalyser.afonin.view.ConsoleApp;
-import ru.javarush.cryptoanalyser.afonin.view.Menu;
+import ru.javarush.cryptoanalyser.afonin.view.console.ConsoleApp;
+import ru.javarush.cryptoanalyser.afonin.view.console.Menu;
 
 import java.util.Scanner;
 
