@@ -19,7 +19,7 @@ public class ConsoleApp {
 
     public void run(String[] args) {
         String[] argsConsole = menu.run();
-        String command = argsConsole[0]; //encode
+        String command = argsConsole[0];
         String[] parametrs = Arrays.copyOfRange(argsConsole, 1, argsConsole.length);
         Result result = mainController.execute(command, parametrs);
         System.out.println(result);

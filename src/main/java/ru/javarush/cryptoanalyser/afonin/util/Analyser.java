@@ -21,8 +21,6 @@ public class Analyser {
 
         double sumAllSymbols = result.values().stream().mapToDouble(i -> i).sum();
         result.replaceAll((key, value) -> (value * 1000 / sumAllSymbols));
-        System.out.println("Частотность: ");
-        result.entrySet().forEach(System.out::println);
         return result;
     }
 
@@ -30,14 +28,11 @@ public class Analyser {
 
         Map<Character, Double> frequencySymbolsInText = Analyser.getFrequencySymbols(text);
         Map<Character, Double> frequencySymbolsInDict = Analyser.getFrequencySymbols(dict);
-        Map<Character, Character> alphabet = frequencySymbolsInText.entrySet().stream()
+        return frequencySymbolsInText.entrySet().stream()
                 .collect(
                         Collectors.toMap(
                                 Map.Entry::getKey,
                                 v -> getCharByFrequency(v.getValue(), frequencySymbolsInDict)));
-        System.out.println("Алфавит");
-        alphabet.entrySet().forEach(System.out::println);
-        return alphabet;
 
     }
 

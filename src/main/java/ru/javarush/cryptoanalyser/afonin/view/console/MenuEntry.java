@@ -27,12 +27,7 @@ public class MenuEntry {
             inputParameters = inputParameters.length() == 0 ? question[1] : inputParameters;
             args.add(inputParameters);
         }
-        System.out.println(args);
         return args.toArray(new String[0]);
     }
 
-    @Override
-    public String toString() {
-        return title;
-    }
 }
