@@ -24,7 +24,6 @@ public class MyFileUtils {
         return path.matches(("^(" + rootSystem + ").*").replaceAll("\\\\", "\\\\\\\\"));
     }
 
-
     public static String getRoot(){
 
         String root = System.getProperty("user.dir");
@@ -60,28 +59,6 @@ public class MyFileUtils {
 
     public static void saveToFile(String fileName, List<String> text){
         saveToFile(getPathFile(fileName), text);
-    }
-
-    public static void main(String[] args) {
-
-
-        System.out.println(System.getProperty("user.dir"));
-
-        String testInput = "C:\\иаf\\lkjafsdlkj.txt";
-
-        System.out.println(MyFileUtils.isAbsolutePath(testInput));
-//        Pattern pattern = Pattern.compile(fullPathFile);
-//        Matcher matcher = pattern.matcher(testInput);
-
-//        boolean matches = testInput.matches(getPathRegex());
-//        System.out.println(testInput);
-//        System.out.println(matches);
-
-//        FileSystem fileSystem = FileSystems.getDefault();
-//        PathMatcher pathMatcher = fileSystem.getPathMatcher("glob:**/testFile.?");
-//        System.out.println(pathMatcher);
-//        Path path = Paths.get("D:/cp/PathMatcherExample.java");
-//        System.out.println(pathMatcher.matches(path));
     }
 
 }

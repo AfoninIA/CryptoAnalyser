@@ -2,7 +2,7 @@ package ru.javarush.cryptoanalyser.afonin.commands;
 
 import ru.javarush.cryptoanalyser.afonin.entity.Result;
 import ru.javarush.cryptoanalyser.afonin.entity.ResultCode;
-import ru.javarush.cryptoanalyser.afonin.util.Cipher;
+import ru.javarush.cryptoanalyser.afonin.util.ScramblerUtil;
 import ru.javarush.cryptoanalyser.afonin.util.MyFileUtils;
 
 
@@ -25,7 +25,7 @@ public class StatisticalDecrypt extends Action {
         String encodedTxtFile = parameters[0];
         String outputDecodedTxtFile = parameters[1];
         String dictTxtFile = parameters[2];
-        Cipher.staticticalDecrypt(encodedTxtFile, outputDecodedTxtFile, dictTxtFile);
+        ScramblerUtil.staticticalDecrypt(encodedTxtFile, outputDecodedTxtFile, dictTxtFile);
         return new Result(ResultCode.OK, "Текст декодирован");
     }
 }

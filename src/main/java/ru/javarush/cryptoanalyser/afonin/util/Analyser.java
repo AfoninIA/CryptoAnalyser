@@ -1,7 +1,6 @@
 package ru.javarush.cryptoanalyser.afonin.util;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 
 public class Analyser {
@@ -24,40 +23,4 @@ public class Analyser {
         return result;
     }
 
-    public static Map<Character, Character> getDecodeAlphabet(List<String> dict, List<String> text){
-
-        Map<Character, Double> frequencySymbolsInText = Analyser.getFrequencySymbols(text);
-        Map<Character, Double> frequencySymbolsInDict = Analyser.getFrequencySymbols(dict);
-        return frequencySymbolsInText.entrySet().stream()
-                .collect(
-                        Collectors.toMap(
-                                Map.Entry::getKey,
-                                v -> getCharByFrequency(v.getValue(), frequencySymbolsInDict)));
-
-    }
-
-    private static Character getCharByFrequency(double frequency, Map<Character, Double> srcFrequencySymbols) {
-        Character symbol = srcFrequencySymbols.entrySet().stream()
-                .min(Comparator.comparingDouble(e -> Math.abs(e.getValue() - frequency)))
-                .map(Map.Entry::getKey)
-                .orElse('!');
-        srcFrequencySymbols.remove(symbol);
-        return symbol;
-    }
-
-    private static void correctAlphabet(Map<Character, Character> alphabet, char c1, char c2){
-        Character keySymbolFirst = getKeyByValue(alphabet, c1);
-        Character keySymbolSecond = getKeyByValue(alphabet, c2);
-        alphabet.replace(keySymbolFirst, c2);
-        alphabet.replace(keySymbolSecond, c1);
-    }
-
-    private static <T, E> T getKeyByValue(Map<T, E> map, E value) {
-        return map.entrySet()
-                .stream()
-                .filter(entry -> Objects.equals(entry.getValue(), value))
-                .map(Map.Entry::getKey)
-                .findAny()
-                .orElse(null);
-    }
 }

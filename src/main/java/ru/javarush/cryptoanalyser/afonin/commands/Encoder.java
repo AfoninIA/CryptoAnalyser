@@ -2,7 +2,7 @@ package ru.javarush.cryptoanalyser.afonin.commands;
 
 import ru.javarush.cryptoanalyser.afonin.entity.Result;
 import ru.javarush.cryptoanalyser.afonin.entity.ResultCode;
-import ru.javarush.cryptoanalyser.afonin.util.Cipher;
+import ru.javarush.cryptoanalyser.afonin.util.ScramblerUtil;
 import ru.javarush.cryptoanalyser.afonin.util.MyFileUtils;
 
 
@@ -27,7 +27,7 @@ public class Encoder extends Action{
         String inputTxtFile = parameters[0];
         String outputEncryptedTxtFile = parameters[1];
         int keyShift = Integer.parseInt(parameters[2]);
-        Cipher.cesarCipher(inputTxtFile, outputEncryptedTxtFile, keyShift);
+        ScramblerUtil.cesarCipher(inputTxtFile, outputEncryptedTxtFile, keyShift);
         return new Result(ResultCode.OK, "Текст закодирован");
     }
 
